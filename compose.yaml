@@ -1,0 +1,8 @@
+services:
+  launches:
+    build:
+      context: ./Launches
+      dockerfile: ./Dockerfile
+    container_name: "launches"
+    hostname: "launches"
+    image: "127.0.0.1/library/launches:latest"
