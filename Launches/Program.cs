@@ -1,35 +1,60 @@
+// spell-checker: words Antiforgery, HSTS, Serilog
+using System.Reflection;
 using Launches.Components;
 using Launches.Services;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+// Use static log during startup to log any configuration warnings or errors.
+Log.Logger = new LoggerConfiguration()
+  .Enrich.FromLogContext()
+  .WriteTo.Console()
+  .CreateBootstrapLogger();
 
-// Add services to the container.
-builder.Services
-    .AddRazorComponents()
-    // .AddInteractiveServerComponents()
-    ;
-
-builder.Services.AddSingleton<ILaunchRepository, LaunchService>();
-builder.Services.AddHostedService(sp =>
-    (LaunchService)sp.GetRequiredService<ILaunchRepository>()
-);
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+try
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    app.UseHsts();
+    var name = Assembly.GetExecutingAssembly().GetName();
+    Log.Information("{AssemblyName} v{Version}", name.Name, name.Version);
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Now that configuration is augmented add the real logger
+    // using appsettings and services.
+    builder.Services.AddSerilog((services, cfg) => cfg
+      .ReadFrom.Configuration(builder.Configuration)
+      .ReadFrom.Services(services)
+    );
+
+    // Add services to the container.
+    builder.Services.AddRazorComponents();
+
+    builder.Services.AddSingleton<ILaunchRepository, LaunchService>();
+    builder.Services.AddHostedService(sp =>
+        (LaunchService)sp.GetRequiredService<ILaunchRepository>()
+    );
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Error", createScopeForErrors: true);
+        // app.UseHsts();
+    }
+
+    // app.UseHttpsRedirection();
+
+    app.UseStaticFiles();
+    app.UseAntiforgery();
+
+    app.MapRazorComponents<App>();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-    // .AddInteractiveServerRenderMode()
-    ;
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

@@ -1,0 +1,13 @@
+@using System.Reflection
+
+<div>Version: @_verison</div>
+@code {
+    private string _verison = string.Empty;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var name = Assembly.GetExecutingAssembly().GetName();
+        _verison = name.Version.ToString();
+    }
+}
+
