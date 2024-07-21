@@ -27,6 +27,8 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents();
 
+    builder.Services.AddSingleton<IHtmlLoader, HtmlLoader>();
+    builder.Services.AddSingleton<ISpaceFlightNow, SpaceFlightNow>();
     builder.Services.AddSingleton<ILaunchRepository, LaunchService>();
     builder.Services.AddHostedService(sp =>
         (LaunchService)sp.GetRequiredService<ILaunchRepository>()

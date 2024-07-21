@@ -45,11 +45,23 @@ header, footer {
   text-shadow: var(--header-text-shadow);;
 }
 
-header > div:first-child {
+header > :first-child {
   /* style the app title */
   font-size: 1.75rem;
   line-height: 1;
   font-weight: bold;
+}
+
+header > :last-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+header > :last-child svg {
+  fill: var(--header-color, white);
+  width: 28px;
+  height: 28px;
 }
 
 main {

@@ -7,7 +7,7 @@
     {
         base.OnInitialized();
         var name = Assembly.GetExecutingAssembly().GetName();
-        _verison = name.Version.ToString();
+        _verison = name.Version?.ToString() ?? string.Empty;
     }
 }
 
