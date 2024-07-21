@@ -20,6 +20,6 @@ if [ -z "${APP_REGISTRY}" ]; then
 else
   docker tag "${LATEST_NAME}" "${APP_REGISTRY}/${IMAGE_NAME}"
   docker tag "${LATEST_NAME}" "${APP_REGISTRY}/${LATEST_NAME}"
-  # docker push "${APP_REGISTRY}/${IMAGE_NAME}"
-  # docker push "${APP_REGISTRY}/${LATEST_NAME}"
+  docker push "${APP_REGISTRY}/${IMAGE_NAME}"
+  docker push "${APP_REGISTRY}/${LATEST_NAME}"
 fi
