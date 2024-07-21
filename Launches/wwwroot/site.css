@@ -1,0 +1,90 @@
+@font-face {
+  font-family: "Yantramanav";
+  src: url("fonts/Yantramanav-Regular.ttf") format("truetype");
+}
+
+:root {
+  --hue: 220;
+  --sat: 20%;
+  --border: 1px solid hsl(var(--hue), var(--sat), 25%);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+body {
+  overflow: hidden;
+  background: linear-gradient(
+    hsl(var(--hue), var(--sat), 95%),
+    hsl(var(--hue), var(--sat), 90%));
+  color: hsl(var(--hue), var(--sat), 10%);
+
+  font-family: "Yantramanav", sans-serif;
+  line-height: 1.2;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+}
+
+header, main, footer {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+header {
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+header > div:first-child {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
+main {
+  overflow-y: auto;
+}
+
+footer {
+  padding: 0.5rem 1rem;
+  background-color: hsl(var(--hue), 65%, 50%);
+  color: hsl(var(--hue), 65%, 90%);
+}
+
+cite {
+  padding: 0;
+}
+
+a:visited {
+  color: currentColor;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: var(--border);
+}
+
+thead, tbody {
+  border-bottom: var(--border);
+}
+
+th, td {
+  text-align: left;
+  padding: 0.25rem;
+}
+
+th {
+  font-variant: small-caps;
+  background: hsl(var(--hue), var(--sat), 75%);
+}
+
+tbody tr:nth-child(odd) {
+  background: hsl(var(--hue), var(--sat), 85%);
+  border-top: var(--border);
+}
