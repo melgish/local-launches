@@ -1,0 +1,3 @@
+@inject ILaunchRepository launches
+
+<span>Next data refresh in T-Minus @(launches.GetNextUpdate().ToString(@"hh\:mm\:ss"))</span>

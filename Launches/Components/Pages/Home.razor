@@ -5,36 +5,12 @@
 
 <header>
   <div>Space Coast Launches</div>
-  <Citation />
+  <NextRefresh />
 </header>
 <main>
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Mission</th>
-        <th>Site</th>
-        <th>Window</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var item in launches.Items)
-      {
-        <tr>
-          <td>@item.Date</td>
-          <td>@item.Mission</td>
-          <td>@item.Site</td>
-          <td>@item.Time</td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            @item.Description
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+  <LaunchTable />
 </main>
 <footer>
-  <div>Next data refresh T-Minus @(launches.GetNextUpdate().ToString(@"hh\:mm\:ss")).</div>
+  <Version />
+  <Citation />
 </footer>
