@@ -28,4 +28,8 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
 .mono
+.env
+appsettings.*.json
+compose.*.yaml
