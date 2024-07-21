@@ -1,11 +1,14 @@
-﻿@page "/"
+@page "/"
 @inject ILaunchRepository launches
 
 <PageTitle>Space Coast Launches</PageTitle>
 
 <header>
   <div>Space Coast Launches</div>
-  <NextRefresh />
+  <div style="display:flex;align-items: center;">
+    <NextRefresh />
+    <GitHubLink />
+  </div>
 </header>
 <main>
   <LaunchTable />

@@ -1,6 +1,8 @@
+using Launches.Models;
+
 namespace Launches.Services;
 
-internal interface ILaunchRepository
+public interface ILaunchRepository
 {
     /// <summary>
     /// Read-only list of Launch data
@@ -10,12 +12,14 @@ internal interface ILaunchRepository
     public TimeSpan GetNextUpdate();
 }
 
-internal sealed partial class LaunchService(
-    ILogger<LaunchService> logger
+public sealed partial class LaunchService(
+    ILogger<LaunchService> logger,
+    ISpaceFlightNow parser
 ) : BackgroundService, ILaunchRepository
 {
     // Last time the launch data was updated.
     private DateTime _lastUpdate = DateTime.Now;
+
     // Update interval
     private readonly TimeSpan _updateInterval = TimeSpan.FromHours(4);
 
@@ -43,7 +47,10 @@ internal sealed partial class LaunchService(
             try
             {
                 logger.LogInformation("Loading launches");
-                Items = SpaceFlightNow.GetSpaceCoastLaunches();
+                Items = parser
+                    .GetLaunches()
+                    .OnTheSpaceCoast()
+                    .ToList();
             }
             catch (Exception e)
             {
