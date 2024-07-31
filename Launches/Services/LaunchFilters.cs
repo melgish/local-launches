@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Launches.Models;
 
-public static partial class LaunchFilters {
+internal static partial class LaunchFilters {
+    [ExcludeFromCodeCoverage]
     [GeneratedRegex("(canaveral|kennedy|patrick)", RegexOptions.IgnoreCase, "en-US")]
-    private static partial Regex SiteRegex();
+    public static partial Regex SiteRegex();
 
     /// <summary>
     /// Test if launch site matches one of the common local names for the

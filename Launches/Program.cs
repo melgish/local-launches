@@ -29,7 +29,14 @@ try
 
     builder.Services.AddSingleton<IHtmlLoader, HtmlLoader>();
     builder.Services.AddSingleton<ISpaceFlightNow, SpaceFlightNow>();
-    builder.Services.AddSingleton<ILaunchRepository, LaunchService>();
+
+
+    builder.Services
+        .AddSingleton<ILaunchRepository, LaunchService>()
+        .AddOptions<LaunchOptions>()
+        .Bind(builder.Configuration.GetSection("Launch"))
+        .ValidateDataAnnotations()
+        .ValidateOnStart();
     builder.Services.AddHostedService(sp =>
         (LaunchService)sp.GetRequiredService<ILaunchRepository>()
     );

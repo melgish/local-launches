@@ -1,16 +1,19 @@
 @inherits TestContext
 @using Moq
 @using System.Reflection
-@using Version = Launches.Components.Version;
+
 @code {
 
   [Fact]
-  public void Comopnent_ShouldRenderVersion()
+  public void ApplicationVersion_ShouldRenderVersionText()
   {
-    var cut = RenderComponent<Version>();
+    // Arrange
+    var cut = RenderComponent<ApplicationVersion>();
 
+    // Act
     var div = cut.Find("div");
 
+    // Assert
     Assert.Matches("Version: 1.", div.TextContent);
   }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Launches.Models;
 
 namespace Launches.Services;
@@ -9,19 +10,24 @@ public interface ILaunchRepository
     /// </summary>
     public IEnumerable<Launch> Items { get; }
 
+    /// <summary>
+    /// Get the time remaining until the next update.
+    /// </summary>
+    /// <returns>Time between updates</returns>
     public TimeSpan GetNextUpdate();
 }
 
-public sealed partial class LaunchService(
-    ILogger<LaunchService> logger,
-    ISpaceFlightNow parser
+internal sealed class LaunchService(
+    IOptions<LaunchOptions> options,
+    ISpaceFlightNow parser,
+    ILogger<LaunchService> logger
 ) : BackgroundService, ILaunchRepository
 {
     // Last time the launch data was updated.
     private DateTime _lastUpdate = DateTime.Now;
 
     // Update interval
-    private readonly TimeSpan _updateInterval = TimeSpan.FromHours(4);
+    private readonly TimeSpan _updateInterval = options.Value.UpdateInterval;
 
     /// <summary>
     /// List of launch items
@@ -57,7 +63,11 @@ public sealed partial class LaunchService(
                 // Trap error, and keep previous launches.
                 logger.LogError(e, "Failed to load launches");
             }
-            await timer.WaitForNextTickAsync(stoppingToken);
+
+            if (!stoppingToken.IsCancellationRequested)
+            {
+                await timer.WaitForNextTickAsync(stoppingToken);
+            }
         }
     }
 }

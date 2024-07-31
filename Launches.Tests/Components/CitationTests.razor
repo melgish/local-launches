@@ -1,0 +1,14 @@
+@inherits TestContext
+
+@code {
+  [Fact]
+  public void Comopnent_ShouldRenderCitation()
+  {
+    var cut = RenderComponent<Citation>();
+
+    var link = cut.Find("a");
+
+      Assert.Matches("spaceflightnow.com", link.Attributes["href"]!.Value);
+    Assert.Matches("spaceflightnow.com", link.TextContent);
+  }
+}

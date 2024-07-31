@@ -1,7 +1,7 @@
 # local-launches
 
 Periodically screen-scrapes [spaceflightnow.com](https://spaceflightnow.com) and
-lists launches on the Space Coast.
+lists launches on the Space Coast making the list available as an HTML page.
 
 ## Building
 

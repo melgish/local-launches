@@ -1,0 +1,61 @@
+@using System.Diagnostics;
+@using Microsoft.AspNetCore.Http
+@using Microsoft.Extensions.DependencyInjection;
+@using Launches.Components.Pages;
+
+@inherits TestContext
+
+@code {
+  // Testing this more for practice than need.
+  // The Error page comes straight from the MS template.
+
+  [Fact]
+  public void ErrorPage_WithoutTraceIdentifier_ShouldRender()
+  {
+    // Arrange
+    var cut = RenderComponent<Error>();
+
+    // Act
+    var h1 = cut.Find("h1");
+
+    // Assert
+    Assert.Matches("Error", h1.InnerHtml);
+  }
+
+  [Fact]
+  public void ErrorPage_WithTraceIdentifier_ShouldRender()
+  {
+    // Arrange
+    var httpContexct = new DefaultHttpContext();
+    httpContexct.TraceIdentifier = "0ICU812";
+
+    // Act
+    var cut = RenderComponent<Error>(
+      c => c.AddCascadingValue(httpContexct)
+    );
+
+    // Assert
+    var h1 = cut.Find("h1");
+
+    // Assert
+    Assert.Matches("Error", h1.InnerHtml);
+  }
+
+  [Fact]
+  public void ErrorPage_WithoutActivity_ShouldRender()
+  {
+    // Arrange
+    var activity = new Activity("TestActivity");
+    activity.Start();
+    activity.SetIdFormat(ActivityIdFormat.W3C);
+    activity.SetParentId("parent-id");
+    Activity.Current = activity;
+
+    // Act
+    var cut = RenderComponent<Error>();
+    var h1 = cut.Find("h1");
+
+    // Assert
+    Assert.Matches("Error", h1.InnerHtml);
+  }
+}
