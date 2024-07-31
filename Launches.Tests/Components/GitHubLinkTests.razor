@@ -1,0 +1,14 @@
+@inherits TestContext
+
+@code {
+  [Fact]
+  public void GithubLink_ShouldRenderLink()
+  {
+    var cut = RenderComponent<GitHubLink>();
+
+    var link = cut.Find("a");
+
+    Assert.NotNull(cut.Find("svg"));
+    Assert.Matches("github.com/melgish", link.Attributes["href"]!.Value);
+  }
+}

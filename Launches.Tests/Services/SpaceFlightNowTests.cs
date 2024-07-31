@@ -28,7 +28,7 @@ public class SpaceFlightNowTests
         Assert.Equal("8:00 EST", first.Time);
 
         var last = result.Last();
-        Assert.Equal("1997-10-16", last.Date);
+        Assert.Equal("1967-10-16", last.Date);
         Assert.Equal("Jupiter 2", last.Mission);
         Assert.Empty(last.Description);
         Assert.Empty(last.Site);

@@ -1,0 +1,23 @@
+@using Microsoft.Extensions.DependencyInjection;
+@inherits TestContext
+
+@code {
+  class TestLaunchRepository : ILaunchRepository
+  {
+    public IEnumerable<Launch> Items { get; set; } = [];
+    public TimeSpan GetNextUpdate() => TimeSpan.FromHours(1.2625);
+  }
+
+  [Fact]
+  public void App_ShouldRenderTheLayout()
+  {
+    Services.AddSingleton<ILaunchRepository>(new TestLaunchRepository());
+    JSInterop.Setup<String>("Blazor._internal.PageTitle.getAndRemoveExistingTitle");
+
+    var cut = RenderComponent<App>();
+    var header = cut.Find("header").TextContent;
+
+    Assert.Matches("Space Coast Launches", header);
+    Assert.Matches("Next data refresh in T-Minus 01:15:45", header);
+  }
+}

@@ -1,0 +1,34 @@
+@inherits TestContext
+@using Moq
+@using System.Reflection
+
+@code {
+
+  [Fact]
+  public void LaunchTable_WhenEmpty_ShouldNotRenderRows()
+  {
+    var cut = RenderComponent<LaunchTable>();
+
+    var th = cut.Find("th");
+    var td = cut.FindAll("td");
+
+    Assert.Matches("Date", th.TextContent);
+    Assert.Empty(td);
+  }
+
+
+  [Fact]
+  public void LaunchTable_ShouldRenderResults()
+  {
+    var cut = RenderComponent<LaunchTable>(
+      ("Items", TestData.Launches)
+    );
+
+    var th = cut.Find("th");
+    var tr = cut.FindAll("tbody tr");
+
+    Assert.Matches("Date", th.TextContent);
+    // two rows per item
+    Assert.Equal(4, tr.Count);
+  }
+}
