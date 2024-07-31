@@ -5,7 +5,7 @@
 @code {
 
   [Fact]
-  public void WhenItemsIsEmpty_ShouldRender()
+  public void LaunchTable_WhenEmpty_ShouldNotRenderRows()
   {
     var cut = RenderComponent<LaunchTable>();
 
@@ -18,7 +18,7 @@
 
 
   [Fact]
-  public void WhenItemsHasElements_ShouldRender()
+  public void LaunchTable_ShouldRenderResults()
   {
     var cut = RenderComponent<LaunchTable>(
       ("Items", TestData.Launches)

@@ -9,7 +9,7 @@
   }
 
   [Fact]
-  public void Component_ShouldRenderResultsOfGetNextUpdate()
+  public void App_ShouldRenderTheLayout()
   {
     Services.AddSingleton<ILaunchRepository>(new TestLaunchRepository());
     JSInterop.Setup<String>("Blazor._internal.PageTitle.getAndRemoveExistingTitle");

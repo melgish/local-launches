@@ -2,13 +2,13 @@
 
 @code {
   [Fact]
-  public void Comopnent_ShouldRenderCitation()
+  public void Citation_ShouldRenderLink()
   {
     var cut = RenderComponent<Citation>();
 
     var link = cut.Find("a");
 
-      Assert.Matches("spaceflightnow.com", link.Attributes["href"]!.Value);
+    Assert.Matches("spaceflightnow.com", link.Attributes["href"]!.Value);
     Assert.Matches("spaceflightnow.com", link.TextContent);
   }
 }
