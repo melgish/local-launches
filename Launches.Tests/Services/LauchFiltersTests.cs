@@ -1,5 +1,6 @@
 // spell-checker: ignore Mahia, Vandenberg
 using Launches.Models;
+using Launches.Services;
 
 namespace Launches.Tests.Services;
 
