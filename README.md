@@ -8,6 +8,10 @@
 Periodically screen-scrapes [spaceflightnow.com](https://spaceflightnow.com) and
 lists launches on the Space Coast making the list available as an HTML page.
 
+## 2026-06-11 Rewrite in Go
+
+I rewrote this project using go, and any further updates will be made in [that repository](https://github.com/melgish/local-launches-go)
+
 ## Building
 
 ### Via Command Line
